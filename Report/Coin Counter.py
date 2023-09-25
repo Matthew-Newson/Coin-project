@@ -1,6 +1,5 @@
 from time import sleep
 
-
 Cointypes = [0.01, 0.02, 0.05, 0.10, 0.20, 0.50, 1.00, 2.00] 
 COIN_DICTIONARY = {
     "Coin Weight" : {
@@ -15,8 +14,8 @@ COIN_DICTIONARY = {
     },
     "Bag weight" : {
         0.01 : 356.00,
-        0.02 : 235.00,
-        0.05 : 325.00,
+        0.02 : 356.00,
+        0.05 : 235.00,
         0.10 : 325.00,
         0.20 : 250.00,
         0.50 : 160.00,
@@ -40,6 +39,9 @@ def Calculator(Weight,Real_Coin,Bag_weight):
 def allvolanteers():
     pass
 
+def accuracy():
+    pass
+
 def coincounting():
     Name = input("What is your name? ")
     i = int(input("How many bags do you want to count? ")) 
@@ -56,11 +58,6 @@ def coincounting():
         count = count + 1
         Calculator(Weight,Real_Coin,Bag_weight)
         sleep(1)
-
-def accuracy():
-    pass
-
-
 
 
 def main():
