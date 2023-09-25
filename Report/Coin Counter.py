@@ -1,59 +1,96 @@
-Name = input("What is your name? ")
-Coin = float(input("What is the value of the coin in the bag? (Please use 0.00 to indicate) "))
-Weight = float(input("What is the weight of the bag? "))
+from time import sleep
 
-thisdict = {
-    0.01: {
-        Bag_weight1: 356.00,
-        Coin_weight1: 3.56
+
+Cointypes = [0.01, 0.02, 0.05, 0.10, 0.20, 0.50, 1.00, 2.00] 
+COIN_DICTIONARY = {
+    "Coin Weight" : {
+        0.01 : 3.56,
+        0.02 : 7.12,
+        0.05 : 2.35,
+        0.10 : 6.50,
+        0.20 : 5.00,
+        0.50 : 8.00,
+        1.00 : 8.75,
+        2.00 : 12.00
     },
-    0.02: {
-        Bag_weight2: 235.00,
-        Coin_weight2: 7.12
+    "Bag weight" : {
+        0.01 : 356.00,
+        0.02 : 235.00,
+        0.05 : 325.00,
+        0.10 : 325.00,
+        0.20 : 250.00,
+        0.50 : 160.00,
+        1.00 : 175.00,
+        2.00 : 120.00
+
     },
-    0.05: {
-        Bag_weight3: 325.00,
-        Coin_weight3: 2.35
-    },
-    0.10: {
-        Bag_weight4: 325.00,
-        Coin_weight4: 6.50
-    },
-    0.20: {
-        Bag_weight5: 250.00,
-        Coin_weight5: 5.00
-    },
-    0.50: {
-        Bag_weight6: 160.00,
-        Coin_weight6: 8.00
-    },
-    1.00: {
-        Bag_weight7: 175.00,
-        Coin_weight7: 8.75
-    },
-    2.00: {
-        Bag_weight8: 120.00,
-        Coin_weight8: 12.00
-    }
 }
-Current_Coin = thisdict[Coin]
-print(Current_Coin)
+
+def Calculator(Weight,Real_Coin,Bag_weight):
+    if Weight > Bag_weight:
+        difference = Weight - Bag_weight
+        difference2 = difference / Real_Coin
+        print ("You need to Remove " +str (difference2) , " coins from bag") 
+    if Weight < Bag_weight:
+        difference = Bag_weight - Weight
+        difference2 = difference % Bag_weight
+        difference3 = difference2 / Real_Coin
+        print ("You need to add " +str (difference3) , " coins from bag")
+
+def allvolanteers():
+    pass
+
+def coincounting():
+    Name = input("What is your name? ")
+    i = int(input("How many bags do you want to count? ")) 
+    count = 0
+    while count != i: 
+        Coin = float(input("What is the value of the coin in the bag? (Please use 0.00 to indicate) "))
+        if Coin not in Cointypes:
+            Coin = print("Invalid coin type please re-enter")
+            sleep(2)
+            continue
+        Weight = float(input("What is the weight of the bag? "))
+        Real_Coin = COIN_DICTIONARY["Coin Weight"][Coin]
+        Bag_weight = COIN_DICTIONARY["Bag weight"][Coin]
+        count = count + 1
+        Calculator(Weight,Real_Coin,Bag_weight)
+        sleep(1)
+
+def accuracy():
+    pass
 
 
 
 
-#if Current_Coin > Weight:
- #   difference = Current_Coin - Weight
-  #  print(difference) 
+def main():
+    menu()
+
+def menu():
+    print("""         ____                                                           __                            
+        /\  _`\           __                                           /\ \__  __                     
+        \ \ \/\_\    ___ /\_\    ___         ___    ___   __  __    ___\ \ ,_\/\_\    ___      __     
+         \ \ \/_/_  / __`\/\ \ /' _ `\      /'___\ / __`\/\ \/\ \ /' _ `\ \ \/\/\ \ /' _ `\  /'_ `\   
+          \ \ \L\ \/\ \L\ \ \ \/\ \/\ \    /\ \__//\ \L\ \ \ \_\ \/\ \/\ \ \ \_\ \ \/\ \/\ \/\ \L\ \  
+           \ \____/\ \____/\ \_\ \_\ \_\   \ \____\ \____/\ \____/\ \_\ \_\ \__\\ \_\ \_\ \_\ \____ \ 
+            \/___/  \/___/  \/_/\/_/\/_/    \/____/\/___/  \/___/  \/_/\/_/\/__/ \/_/\/_/\/_/\/___L\ \
+                                                                                           /\____/
+                                                                                           \_/__/""")
+    print()
     
+    Choice = input("""
 
-#    thisdict = {
- #   0.01 : 356.00,
-  #  0.02 : 235.00,
-   # 0.05 : 325.00,
-    #0.10 : 325.00,
-    #0.20 : 250.00,
-    #0.50 : 160.00,
-    #1.00 : 175.00,
-    #2.00 : 120.00
-#}
+                        A: Show all volanteers 
+                        B: Count Coin!
+                        C: Show accuracy of all volanteers
+                   
+                        Please enter your choice: """)
+    
+    if Choice == "A" or Choice == "a":
+        allvolanteers()
+    if Choice == "B" or Choice == "b":
+        coincounting()
+    if Choice == "C" or Choice == "c":
+        accuracy()
+
+menu()
