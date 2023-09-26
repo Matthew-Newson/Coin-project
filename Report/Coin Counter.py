@@ -64,30 +64,25 @@ def main():
     menu()
 
 def menu():
-    print("""         ____                                                           __                            
-        /\  _`\           __                                           /\ \__  __                     
-        \ \ \/\_\    ___ /\_\    ___         ___    ___   __  __    ___\ \ ,_\/\_\    ___      __     
-         \ \ \/_/_  / __`\/\ \ /' _ `\      /'___\ / __`\/\ \/\ \ /' _ `\ \ \/\/\ \ /' _ `\  /'_ `\   
-          \ \ \L\ \/\ \L\ \ \ \/\ \/\ \    /\ \__//\ \L\ \ \ \_\ \/\ \/\ \ \ \_\ \ \/\ \/\ \/\ \L\ \  
-           \ \____/\ \____/\ \_\ \_\ \_\   \ \____\ \____/\ \____/\ \_\ \_\ \__\\ \_\ \_\ \_\ \____ \ 
-            \/___/  \/___/  \/_/\/_/\/_/    \/____/\/___/  \/___/  \/_/\/_/\/__/ \/_/\/_/\/_/\/___L\ \
-                                                                                           /\____/
-                                                                                           \_/__/""")
+    print("""  _____     _        _____               __  _          
+ / ___/__  (_)__    / ___/__  __ _____  / /_(_)__  ___ _
+/ /__/ _ \/ / _ \  / /__/ _ \/ // / _ \/ __/ / _ \/ _ `/
+\___/\___/_/_//_/  \___/\___/\_,_/_//_/\__/_/_//_/\_, / 
+                                                 /___/""")
     print()
     
     Choice = input("""
-
-                        A: Show all volanteers 
-                        B: Count Coin!
-                        C: Show accuracy of all volanteers
+        A: Show all volanteers 
+        B: Count Coin!
+        C: Show accuracy of all volanteers
                    
-                        Please enter your choice: """)
+    Please enter your choice: """)
     
-    if Choice == "A" or Choice == "a":
+    if Choice.lower() == "a": 
         allvolanteers()
-    if Choice == "B" or Choice == "b":
+    if Choice.lower() == "b" :
         coincounting()
-    if Choice == "C" or Choice == "c":
+    if Choice.lower() == "c" :
         accuracy()
 
 menu()
