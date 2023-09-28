@@ -34,7 +34,7 @@ def Calculator(Weight,Real_Coin,Bag_weight):
         difference = Bag_weight - Weight
         difference2 = difference % Bag_weight
         difference3 = difference2 / Real_Coin
-        print ("You need to add " +str (difference3) , " coins from bag")
+        print ("You need to add " +str (difference3) , " coins from bag") #create Weight == Bag_weight
 
 def allvolanteers():
     pass
