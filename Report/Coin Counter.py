@@ -1,6 +1,6 @@
 from time import sleep
 
-Cointypes = [0.01, 0.02, 0.05, 0.10, 0.20, 0.50, 1.00, 2.00] 
+COINTYPE = [0.01, 0.02, 0.05, 0.10, 0.20, 0.50, 1.00, 2.00] 
 COIN_DICTIONARY = {
     "Coin Weight" : {
         0.01 : 3.56,
@@ -25,7 +25,7 @@ COIN_DICTIONARY = {
     },
 }
 
-def Calculator(Weight,Real_Coin,Bag_weight):
+def Calculator(Weight,Real_Coin,Bag_weight,correct):
     if Weight > Bag_weight:
         difference = Weight - Bag_weight
         difference2 = difference / Real_Coin
@@ -35,30 +35,42 @@ def Calculator(Weight,Real_Coin,Bag_weight):
         difference2 = difference % Bag_weight
         difference3 = difference2 / Real_Coin
         print ("You need to add " +str (difference3) , " coins from bag") #create Weight == Bag_weight
-
+    if Weight == Bag_weight:
+        return True
+     
 def allvolanteers():
     pass
 
-def accuracy():
-    pass
+def accuracy(i,correct):
+    accuracy = correct / i 
+    percentage = accuracy *100 
+    print (f"{percentage} %") 
 
 def coincounting():
     Name = input("What is your name? ")
     i = int(input("How many bags do you want to count? ")) 
+    correct = 0
     count = 0
-    while count != i: 
-        Coin = float(input("What is the value of the coin in the bag? (Please use 0.00 to indicate) "))
-        if Coin not in Cointypes:
-            Coin = print("Invalid coin type please re-enter")
-            sleep(2)
+    while count != i:
+        try:
+            Coin = float(input("What is the value of the coin in the bag? (Please use 0.00 to indicate) "))
+        except:
+            print("Invalid data entered please retry") 
             continue
+        else:
+            if Coin not in COINTYPE:
+                Coin = print("Invalid coin type please re-enter")
+                sleep(1)
+                continue
         Weight = float(input("What is the weight of the bag? "))
         Real_Coin = COIN_DICTIONARY["Coin Weight"][Coin]
         Bag_weight = COIN_DICTIONARY["Bag weight"][Coin]
-        count = count + 1
-        Calculator(Weight,Real_Coin,Bag_weight)
-        sleep(1)
-
+        count += 1
+        result = Calculator(Weight,Real_Coin,Bag_weight,correct)
+        if result is True:
+            correct += 1
+    accuracy(i,correct) 
+    sleep(1)
 
 def main():
     menu()
