@@ -1,4 +1,6 @@
 from time import sleep
+import os
+import sys
 
 COINTYPE = [0.01, 0.02, 0.05, 0.10, 0.20, 0.50, 1.00, 2.00] 
 COIN_DICTIONARY = {
@@ -29,22 +31,48 @@ def Calculator(Weight,Real_Coin,Bag_weight,correct):
     if Weight > Bag_weight:
         difference = Weight - Bag_weight
         difference2 = difference / Real_Coin
-        print ("You need to Remove " +str (difference2) , " coins from bag") 
+        print ("You need to Remove " +str (difference2) , " coins from bag")
+        sleep(1)
     if Weight < Bag_weight:
         difference = Bag_weight - Weight
         difference2 = difference % Bag_weight
         difference3 = difference2 / Real_Coin
-        print ("You need to add " +str (difference3) , " coins from bag") #create Weight == Bag_weight
+        print ("You need to add " +str (difference3) , " coins from bag")
+        sleep(1)
     if Weight == Bag_weight:
+        print("Bag weight is correct")
+        sleep(1) 
         return True
      
+
+def save_data(Name, count, accuracy_percentage):
+    file.close()
+    file = open("Coin_count.txt", "+a") 
+    file.write (f"\n{Name} , Total bags counted {count} , Accuracy {accuracy_percentage}") 
+    file.close()
+    print("Data save")
+    menu()
+
+def read_data(Name, count, accuracy_percentage):
+    file = open("Coin_count.txt", "+r")
+    data_read = file.find(Name)
+    if data_read == -1:
+        save_data(Name, count, accuracy_percentage)
+
+
+def update_data():
+    pass()
+
+
 def allvolanteers():
     pass
 
 def accuracy(i,correct):
     accuracy = correct / i 
-    percentage = accuracy *100 
-    print (f"{percentage} %") 
+    accuracy2 = accuracy *100
+    accuracy_percentage = round(accuracy2)
+    print(accuracy_percentage) 
+    return accuracy_percentage 
 
 def coincounting():
     Name = input("What is your name? ")
@@ -69,8 +97,10 @@ def coincounting():
         result = Calculator(Weight,Real_Coin,Bag_weight,correct)
         if result is True:
             correct += 1
-    accuracy(i,correct) 
+    accuracy_percentage = accuracy(i,correct)
     sleep(1)
+    read_data(Name, count, accuracy_percentage)
+    update_data(Name, count, accuracy_percentage)
 
 def main():
     menu()
@@ -87,6 +117,7 @@ def menu():
         A: Show all volanteers 
         B: Count Coin!
         C: Show accuracy of all volanteers
+        D: End program
                    
     Please enter your choice: """)
     
@@ -96,5 +127,7 @@ def menu():
         coincounting()
     if Choice.lower() == "c" :
         accuracy()
-
+    if Choice.lower() == "d" :
+        sys.exit()
+    
 menu()
