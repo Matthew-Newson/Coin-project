@@ -1,9 +1,11 @@
+#ALL IMPORTS
 from time import sleep
 import os
 import sys
 
+#DECLARING CONSTANTS
 COINTYPE = [0.01, 0.02, 0.05, 0.10, 0.20, 0.50, 1.00, 2.00] 
-COIN_DICTIONARY = {
+COIN_DICTIONARY = {      #Dictionary that uses coin input as a key to get coin weight and bag weight
     "Coin Weight" : {
         0.01 : 3.56,
         0.02 : 7.12,
@@ -27,7 +29,8 @@ COIN_DICTIONARY = {
     },
 }
 
-def Calculator(Weight,Real_Coin,Bag_weight,correct):
+#DEFINING FUNCTIONS
+def Calculator(Weight,Real_Coin,Bag_weight,correct):  #Calculates how many coins you need to add and remove from your bag
     if Weight > Bag_weight:
         difference = Weight - Bag_weight
         difference2 = difference / Real_Coin
@@ -45,7 +48,7 @@ def Calculator(Weight,Real_Coin,Bag_weight,correct):
         return True
      
 
-def save_data(Name, count, accuracy_percentage):
+def save_data(Name, count, accuracy_percentage): #Saves data to file
     file.close()
     file = open("Coin_count.txt", "+a") 
     file.write (f"\n{Name} , Total bags counted {count} , Accuracy {accuracy_percentage}") 
@@ -53,28 +56,44 @@ def save_data(Name, count, accuracy_percentage):
     print("Data save")
     menu()
 
-def read_data(Name, count, accuracy_percentage):
+def read_data(Name, count, accuracy_percentage): #Reads the file
     file = open("Coin_count.txt", "+r")
-    data_read = file.find(Name)
-    if data_read == -1:
-        save_data(Name, count, accuracy_percentage)
+    texts = file.readlines()
+    data = -1
+    lines = 0
+    count = 0
+    for line, text in enumerate(texts):
+        lines = len(texts)
+        while data == -1:
+            data = text.find(Name)
+            count += 1
+            if data != -1:
+                print(count)
+                print("Name located") 
+            elif count == lines:
+                print("ERROR")
+            else:
+                break
+        
+            
 
 
-def update_data():
-    pass()
 
-
-def allvolanteers():
+def update_data(): #Updates file if name is already in file
     pass
 
-def accuracy(i,correct):
+
+def allvolanteers(): #Prints all volanteers saves in the file
+    pass
+
+def accuracy(i,correct): #Calculates the accuracy in percentage
     accuracy = correct / i 
     accuracy2 = accuracy *100
     accuracy_percentage = round(accuracy2)
     print(accuracy_percentage) 
     return accuracy_percentage 
 
-def coincounting():
+def coincounting(): #Main part of the code that counts the coins and asks
     Name = input("What is your name? ")
     i = int(input("How many bags do you want to count? ")) 
     correct = 0
@@ -105,7 +124,7 @@ def coincounting():
 def main():
     menu()
 
-def menu():
+def menu():  #Main menu 
     print("""  _____     _        _____               __  _          
  / ___/__  (_)__    / ___/__  __ _____  / /_(_)__  ___ _
 / /__/ _ \/ / _ \  / /__/ _ \/ // / _ \/ __/ / _ \/ _ `/
