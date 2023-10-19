@@ -67,11 +67,11 @@ def read_data(Name, count, accuracy_percentage): #Reads the file
 
 
 
-def update_data(): #Updates file if name is already in file
+def adduser(): #Updates file if name is already in file
     pass
 
 
-def allvolanteers(): #Prints all volanteers saves in the file
+def allvolunteers(): #Prints all volunteers saves in the file
     pass
 
 def accuracy(i,correct): #Calculates the accuracy in percentage
@@ -107,7 +107,7 @@ def coincounting(): #Main part of the code that counts the coins and asks
     accuracy_percentage = accuracy(i,correct)
     sleep(1)
     read_data(Name, count, accuracy_percentage)
-    update_data(Name, count, accuracy_percentage)
+    
 
 def main():
     menu()
@@ -121,20 +121,23 @@ def menu():  #Main menu
     print()
     
     Choice = input("""
-        A: Show all volanteers 
-        B: Count Coin!
-        C: Show accuracy of all volanteers
-        D: End program
+        A: Show all volunteers 
+        B: Use already excising volunteers
+        C: Show accuracy of all volunteers
+        D: Add new volunteer
+        E: End program
                    
     Please enter your choice: """)
     
     if Choice.lower() == "a": 
-        allvolanteers()
+        allvolunteers()
     if Choice.lower() == "b" :
         coincounting()
     if Choice.lower() == "c" :
         accuracy()
     if Choice.lower() == "d" :
+        adduser()
+    if Choice.lower() == "e" :
         sys.exit()
     
 menu()
