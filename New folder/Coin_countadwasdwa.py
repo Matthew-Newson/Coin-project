@@ -6,8 +6,9 @@ import sys
 #DECLARING CONSTANTS
 DATA = {
         "Name1" : " ",
-        "Total_count": " ",
-        "Accuracy" : " "
+        "Total_count": 0,
+        "Accuracy" : 0,
+        "Correct" : 0,
         }
 
 COINTYPE = [0.01, 0.02, 0.05, 0.10, 0.20, 0.50, 1.00, 2.00] 
@@ -54,44 +55,61 @@ def Calculator(Weight,Real_Coin,Bag_weight,correct):  #Calculates how many coins
         return True
 
 def adduser(): #Updates file if name is already in file
-    Name = input("What is your name")
-    DATA.update({"Name1":Name})
-    DATA.update({"Total_count": "0"})
-    DATA.update({"Accuracy": "0"})
-    with open("test.json", "w")as f:
-        texts[Name] = {"Total_Count": "0", "Accuracy": "0%"}
-        json.dump(texts,f) 
+    Name = input("What is your name? ")
+    if Name in texts:
+        ("Name already in use")
+        sleep(1)
+        menu()
+    else:
+        DATA.update({"Name1":Name})
+        DATA.update({"Total_count": "0"})
+        DATA.update({"Accuracy": "0"})
+        with open("Coin_count.json", "w")as f:
+            texts[Name] = {"Total_Count": "0", "Accuracy": "0%"}
+            json.dump(texts,f)
+        coincounting(Name)
 
 def usercreated():
         Name = input("Name: ")
-        with open("test.json", "r") as file:
-            texts = json.load(file)
         if Name in texts:
-            with open("test.json", "r") as file:
-                Total_Count = (texts[Name]["Total_Count"])
-                Accuracy = (texts[Name]["Accuracy"])
-                DATA.update({"Name1":Name})
-                DATA.update({"Total_count": Total_Count})
-                DATA.update({"Accuracy": Accuracy})
-                coincounting()
+            Total_Count = (texts[Name]["Total_Count"])
+            Accuracy = (texts[Name]["Accuracy"])
+            Correct = (texts[Name]["Correct"])
+            DATA["Name1"] = Name
+            DATA["Total_count"] = Total_Count
+            DATA["Accuracy"] = Accuracy
+            DATA["Correct"] = Correct
+            coincounting(Name)
         else:
             print("Name not found")
+            sleep(1) 
             menu() 
     
-
+def update_file(count, accuracy_percentage,correct,Name):
+    texts[Name] = {"Total_Count": count, "Accuracy": accuracy_percentage, "Correct": correct}
+    with open("Coin_count.json", "w") as f:
+        json.dump(texts,f)
+    print("Data Saved")
+    sleep(1)
+    menu()
 
 def allvolunteers(): #Prints all volunteers saves in the file
-    pass
+    print(texts)
+    sleep(5)
+    menu()
 
-def accuracy(i,correct): #Calculates the accuracy in percentage
-    accuracy = correct / i 
+def accuracy(count,correct): #Calculates the accuracy in percentage
+    accuracy = correct / count 
     accuracy2 = accuracy *100
     accuracy_percentage = round(accuracy2)
-    print(accuracy_percentage) 
     return accuracy_percentage 
 
-def coincounting(): #Main part of the code that counts the coins and asks
-    i = int(input("How many bags do you want to count? ")) 
+def coincounting(Name): #Main part of the code that counts the coins and asks
+    i = input("How many bags do you want to count? ")
+    while not i.isdigit():
+        print("Invalid input")
+        i = input("How many bags do you want to count? ")
+    i = int(i)
     correct = 0
     count = 0
     while count != i:
@@ -111,10 +129,12 @@ def coincounting(): #Main part of the code that counts the coins and asks
         count += 1
         result = Calculator(Weight,Real_Coin,Bag_weight,correct)
         if result is True:
-            correct += 1
-    accuracy_percentage = accuracy(i,correct)
+            correct += 1 
+    count += int(DATA["Total_count"])
+    correct += int(DATA["Correct"])
+    accuracy_percentage = accuracy(count,correct)
     sleep(1)
-    # read_data(Name, count, accuracy_percentage)
+    update_file(count, accuracy_percentage,correct,Name)
 
 def menu():  #Main menu 
     print("""  _____     _        _____               __  _          
@@ -125,25 +145,27 @@ def menu():  #Main menu
     print()
     
     Choice = input("""
-        A: Show all volunteers 
+        A: Show all volunteers statistics
         B: Use already excising volunteers
-        C: Show accuracy of all volunteers
-        D: Add new volunteer
-        E: End program
+        C: Add new volunteer
+        D: End program
                    
     Please enter your choice: """)
     
     if Choice.lower() == "a": 
         allvolunteers()
-    if Choice.lower() == "b" :
+    elif Choice.lower() == "b" :
         usercreated()
-    if Choice.lower() == "c" :
-        accuracy()
-    if Choice.lower() == "d" :
+    elif Choice.lower() == "c" :
         adduser()
-    if Choice.lower() == "e" :
+    elif Choice.lower() == "d" :
+        print("Thanks for counting coins")
+        sys.exit()
+    else:
+        print("Invalid option shutting down") 
         sys.exit()
 
-with open("test.json", "r") as file:
+texts = dict()
+with open("Coin_count.json", "r") as file:
     texts = json.load(file)
 menu()
