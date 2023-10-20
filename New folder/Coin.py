@@ -1,6 +1,6 @@
 #ALL IMPORTS
 from time import sleep
-import os
+import json
 import sys
 
 #DECLARING CONSTANTS
@@ -48,27 +48,51 @@ def Calculator(Weight,Real_Coin,Bag_weight,correct):  #Calculates how many coins
         return True
      
 
-def save_data(Name, count, accuracy_percentage): #Saves data to file
-    file.close()
-    file = open("Coin_count.txt", "+a") 
-    file.write (f"\n{Name} , Total bags counted {count} , Accuracy {accuracy_percentage}") 
-    file.close()
-    print("Data save")
-    menu()
+# def save_data(Name, count, accuracy_percentage): #Saves data to file
+#     file.close()
+#     file = open("Coin_count.txt", "+a") 
+#     file.write (f"\n{Name} , Total bags counted {count} , Accuracy {accuracy_percentage}") 
+#     file.close()
+#     print("Data save")
+#     menu()
 
-def read_data(Name, count, accuracy_percentage): #Reads the file
-    file = open("Coin_count.txt", "+r")
-    texts = file.readlines()
-    data = -1
-    for lines, text in enumerate(texts):
-        while data != 0:
-            data = text.find(Name)
-            print(data)
+# def read_data(Name, count, accuracy_percentage): #Reads the file
+#     file = open("Coin_count.txt", "+r")
+#     texts = file.readlines()
+#     data = -1
+#     for lines, text in enumerate(texts):
+#         while data != 0:
+#             data = text.find(Name)
+#             print(data)
 
 
 
 def adduser(): #Updates file if name is already in file
-    pass
+    Name = input("What is your name") 
+    with open("test.json", "w")as f:
+        texts[Name] = {"Total_Count": "0", "Accuracy": "0%"}
+        json.dump(texts,f) 
+
+def usercreated():
+        data = {
+        "Name1" : " ",
+        "Total_count": " ",
+        "Accuracy" : " "
+        }
+        Name = input("Name: ")
+        with open("test.json", "r") as file:
+            texts = json.load(file)
+        if Name in texts:
+            with open("test.json", "r") as file:
+                Total_Count = (texts[Name]["Total_Count"])
+                Accuracy = (texts[Name]["Accuracy"])
+                data.update({"Name1":Name})
+                data.update({"Total_count": Total_Count})
+                data.update({"Accuracy": Accuracy})
+        else:
+            print("Name not found")
+            menu() 
+    
 
 
 def allvolunteers(): #Prints all volunteers saves in the file
@@ -106,11 +130,11 @@ def coincounting(): #Main part of the code that counts the coins and asks
             correct += 1
     accuracy_percentage = accuracy(i,correct)
     sleep(1)
-    read_data(Name, count, accuracy_percentage)
+    # read_data(Name, count, accuracy_percentage)
     
 
-def main():
-    menu()
+# def main():
+#     menu()
 
 def menu():  #Main menu 
     print("""  _____     _        _____               __  _          
@@ -132,12 +156,14 @@ def menu():  #Main menu
     if Choice.lower() == "a": 
         allvolunteers()
     if Choice.lower() == "b" :
-        coincounting()
+        usercreated()
     if Choice.lower() == "c" :
         accuracy()
     if Choice.lower() == "d" :
         adduser()
     if Choice.lower() == "e" :
         sys.exit()
-    
+
+with open("test.json", "r") as file:
+    texts = json.load(file)
 menu()

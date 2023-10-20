@@ -7,8 +7,9 @@ data = {
 }
 
 Name = input("Name: ")
-file = open("test.json", "r")
-texts = json.load(file)
+# file = open("test.json", "r")
+with open("test.json", "r") as file:
+    texts = json.load(file)
 if Name in texts:
     with open("test.json", "r") as file:
         Total_Count = (texts[Name]["Total_Count"])
@@ -17,10 +18,10 @@ if Name in texts:
         data.update({"Total_count": Total_Count})
         data.update({"Accuracy": Accuracy})
 elif Name not in texts:
-    with open("test.json", "a"):
-        texts[Name] = {"Total_Count": "12", "Accuracy": "30%"}
-        json.dump(texts)
-
+    with open("test.json", "w")as f:
+        texts[Name] = {"Total_Count": "0", "Accuracy": "0%"}
+        json.dump(texts,f) 
+print(data)
 
 
 # for line, text in enumerate(texts):
